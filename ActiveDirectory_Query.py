@@ -6,32 +6,32 @@ from ldap3 import Server, Connection, ALL, ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRI
 
 class ActiveDirectoryAnalyzer(Analyzer):
 
-    #Handle configuration file options
-    def __init__(self):
-        Analyzer.__init__(self)
+	#Handle configuration file options
+	def __init__(self):
+		Analyzer.__init__(self)
 		self.ad_server = self.get_param('config.server', None, 'Active Directory server is missing')
 		self.bind_username = self.get_param('config.bind_username', None, 'Account is missing')
 		self.bind_password = self.get_param('config.bind_password', None, 'Password is missing')
 		self.base = self.get_param('config.baseDN', None, 'BaseDN is missing')
 		self.service = self.get_param('config.service', None, 'Service parameter is missing')
 		self.query = "(sAMAccountName=%s)" % self.get_data()
-    
+
 	def ad_connect(self):
 		try:
 			self.server = Server(self.ad_server, get_info=ALL)
 			self.connection = Connection(self.server, self.bind_username, self.bind_password, auto_bind=True) 
 		except Exception as e:
 			self.error(e)
-	
+
 	def ad_search(self):
 		try:
 			self.connection.search(self.base, self.query, attributes=[ALL_ATTRIBUTES])
 		except Exception as e:
 			self.error(e)
 	
-    #Generate Short report
-    def summary(self, raw):
-        taxonomies = []
+	#Generate Short report
+	def summary(self, raw):
+		taxonomies = []
 		namespace = "ActiveDirectory"
 		predicate = "Attributes"
 		value = "\"0\""
@@ -47,9 +47,9 @@ class ActiveDirectoryAnalyzer(Analyzer):
 		#Build taxonomy
 		taxonomies.append(self.build_taxonomy(level, namespace, predicate, value))
 		return {"taxonomies": taxonomies}
-    
-    #Analyzer main function
-    def run(self):
+
+	#Analyzer main function
+	def run(self):
 		if (self.username is None) or (self.password is None) or (self.server is None) or (self.base is None):
 			self.error('Invalid configuration')
 		else:
