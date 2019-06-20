@@ -9,68 +9,33 @@
   "baseConfig": "ActiveDirectory",
   "configurationItems": [
     {
-      "name": "host",
-      "description": "Elasticsearch Hostname",
-      "type": "string",
-      "multi": true,
-      "required": true,
-      "defaultValue": "localhost"
-    },
-    {
-      "name": "port",
-      "description": "Elasticsearch Port",
-      "type": "number",
-      "multi": false,
-      "required": false,
-      "defaultValue": 9200
-    },
-    {
-      "name": "https",
-      "description": "Should talk to Elasticsearch API using HTTP or HTTPS",
-      "type": "boolean",
-      "multi": false,
-      "required": false,
-      "defaultValue": true
-    },
-    {
-      "name": "username",
-      "description": "Should talk to Elasticsearch API with this username",
+      "name": "server",
+      "description": "Active Directory server",
       "type": "string",
       "multi": false,
-      "required": false,
-      "defaultValue": ""
+      "required": true
     },
     {
-      "name": "password",
-      "description": "Should talk to Elasticsearch API with this password",
+      "name": "bind_username",
+      "description": "Username used to bind Active Directory",
       "type": "string",
       "multi": false,
-      "required": false,
-      "defaultValue": ""
+      "required": true
     },
     {
-      "name": "index",
-      "description": "Elasticsearch Index to query",
+      "name": "bind_password",
+      "description": "Password used to bind Active Directory",
       "type": "string",
       "multi": false,
-      "required": false,
-      "defaultValue": "logstash-*"
+      "required": true
     },
     {
-      "name": "cert_check",
-      "description": "Verify server certificate",
-      "type": "boolean",
-      "multi": false,
-      "required": true,
-      "defaultValue": false
-    },
-    {
-      "name": "cert_path",
-      "description": "Path to the CA on the system used to check server certificate",
+      "name": "base",
+      "description": "DN used to search in Active Directory",
       "type": "string",
       "multi": false,
-      "required": false
+      "required": true
     }
   ],
-  "command": "ActiveDirectoryAnalyzer/elasticsearch_analyzer.py"
+  "command": "ActiveDirectoryAnalyzer/ActiveDirectory_Query.py"
 }
