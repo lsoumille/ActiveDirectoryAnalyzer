@@ -1,0 +1,76 @@
+{
+  "name": "AD_User",
+  "version": "1.0",
+  "author": "Soumille Lucas",
+  "url": "https://github.com/TheHive-Project/Cortex-Analyzers",
+  "license": "AGPL-V3",
+  "description": "Get all attributes for a AD object",
+  "dataTypeList": ["username"],
+  "baseConfig": "ActiveDirectory",
+  "configurationItems": [
+    {
+      "name": "host",
+      "description": "Elasticsearch Hostname",
+      "type": "string",
+      "multi": true,
+      "required": true,
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "port",
+      "description": "Elasticsearch Port",
+      "type": "number",
+      "multi": false,
+      "required": false,
+      "defaultValue": 9200
+    },
+    {
+      "name": "https",
+      "description": "Should talk to Elasticsearch API using HTTP or HTTPS",
+      "type": "boolean",
+      "multi": false,
+      "required": false,
+      "defaultValue": true
+    },
+    {
+      "name": "username",
+      "description": "Should talk to Elasticsearch API with this username",
+      "type": "string",
+      "multi": false,
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "password",
+      "description": "Should talk to Elasticsearch API with this password",
+      "type": "string",
+      "multi": false,
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "index",
+      "description": "Elasticsearch Index to query",
+      "type": "string",
+      "multi": false,
+      "required": false,
+      "defaultValue": "logstash-*"
+    },
+    {
+      "name": "cert_check",
+      "description": "Verify server certificate",
+      "type": "boolean",
+      "multi": false,
+      "required": true,
+      "defaultValue": false
+    },
+    {
+      "name": "cert_path",
+      "description": "Path to the CA on the system used to check server certificate",
+      "type": "string",
+      "multi": false,
+      "required": false
+    }
+  ],
+  "command": "ActiveDirectoryAnalyzer/elasticsearch_analyzer.py"
+}
