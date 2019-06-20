@@ -30,7 +30,7 @@
       "required": true
     },
     {
-      "name": "base",
+      "name": "baseDN",
       "description": "DN used to search in Active Directory",
       "type": "string",
       "multi": false,
