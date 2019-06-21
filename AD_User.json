@@ -7,6 +7,9 @@
   "description": "Get all attributes for a AD object",
   "dataTypeList": ["username"],
   "baseConfig": "ActiveDirectory",
+  "config": {
+    "service": "ad-user" 
+  },
   "configurationItems": [
     {
       "name": "server",
