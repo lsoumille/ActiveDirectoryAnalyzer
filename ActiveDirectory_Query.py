@@ -16,35 +16,56 @@ class ActiveDirectoryAnalyzer(Analyzer):
 		self.base = self.get_param('config.baseDN', None, 'BaseDN is missing')
 		self.service = self.get_param('config.service', None, 'Service parameter is missing')
 		self.query = "(sAMAccountName=%s)" % self.get_data()
-
+	
+	#Make binding to ActiveDirectory
 	def ad_connect(self):
 		try:
 			self.server = Server(self.ad_server, get_info=ALL)
 			self.connection = Connection(self.server, self.bind_username, self.bind_password, auto_bind=True) 
 		except Exception as e:
 			self.error(e)
-
+	
+	#Make LDAP query
 	def ad_search(self):
 		try:
 			self.connection.search(self.base, self.query, attributes=[ALL_ATTRIBUTES])
 		except Exception as e:
 			self.error(e)
 	
+	#Put all members in self member variable
+	def group_members(self):
+		if self.connection.entries[0]['member']:
+			self.members = {}
+			self.members['members'] = self.connection.entries[0]['member'].value
+		else:
+			self.error("member attribute is not defined")
+	
 	#Generate Short report
 	def summary(self, raw):
 		taxonomies = []
 		namespace = "ActiveDirectory"
-		predicate = "Attributes"
 		value = "\"0\""
 		result = {
 			"has_result": True
 		}
-		#If no result then return an error
-		if not self.connection.entries[0]:
-			result["has_result"] = False
-		else:
-			level = "info"
-			value = "{}".format(len(vars(self.connection.entries[0]).items()))
+		
+		if self.service == 'ad-user':
+			predicate = "Attributes"
+			#If no result then return an error
+			if not self.connection.entries[0]:
+				result["has_result"] = False
+			else:
+				level = "info"
+				value = "{}".format(len(vars(self.connection.entries[0]).items()))
+		elif self.service == 'ad-group':
+			predicate = "Members"
+			#If no result then return an error
+			if not self.members:
+				result["has_result"] = False
+			else:
+				level = "info"
+				value = "{}".format(len(self.members))
+		
 		#Build taxonomy
 		taxonomies.append(self.build_taxonomy(level, namespace, predicate, value))
 		return {"taxonomies": taxonomies}
@@ -58,6 +79,11 @@ class ActiveDirectoryAnalyzer(Analyzer):
 				self.ad_connect()
 				self.ad_search()
 				self.report(json.loads(self.connection.entries[0].entry_to_json()))
+			elif self.service == 'ad-group':
+				self.ad_connect()
+				self.ad_search()
+				self.group_members()
+				self.report(self.members)
 			else:
 				self.error('Invalid service')
 

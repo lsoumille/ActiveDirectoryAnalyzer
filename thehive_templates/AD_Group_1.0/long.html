@@ -1,0 +1,23 @@
+<div class="panel panel-info" ng-if="success">
+    <div class="panel-heading">
+        AD members for <strong>{{artifact.dn}}</strong>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover" style="table-layout: fixed;">
+            <tr>
+                <th>Members</th>
+            </tr>
+            <tr ng-repeat="member in content.members">
+                <td style="word-wrap: break-word;">{{member}}</td>
+            </tr>
+        </dl>
+    </div>
+</div>
+<div class="panel panel-danger" ng-if="!success">
+    <div class="panel-heading">
+        <strong>{{(artifact.data || artifact.attachment.name) | fang}}</strong>
+    </div>
+    <div class="panel-body">
+        {{content.errorMessage}}
+    </div>
+</div>

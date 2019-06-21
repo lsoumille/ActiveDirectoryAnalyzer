@@ -1,0 +1,44 @@
+{
+  "name": "AD_Group",
+  "version": "1.0",
+  "author": "Soumille Lucas",
+  "url": "https://github.com/TheHive-Project/Cortex-Analyzers",
+  "license": "AGPL-V3",
+  "description": "Get all members of an AD group",
+  "dataTypeList": ["group"],
+  "baseConfig": "ActiveDirectory",
+  "config": {
+    "service": "ad-group" 
+  },
+  "configurationItems": [
+    {
+      "name": "server",
+      "description": "Active Directory server",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "bind_username",
+      "description": "Username used to bind Active Directory",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "bind_password",
+      "description": "Password used to bind Active Directory",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "baseDN",
+      "description": "DN used to search in Active Directory",
+      "type": "string",
+      "multi": false,
+      "required": true
+    }
+  ],
+  "command": "ActiveDirectoryAnalyzer/ActiveDirectory_Query.py"
+}
