@@ -1,0 +1,25 @@
+<div class="panel panel-info" ng-if="success">
+    <div class="panel-heading">
+        AD attributes for <strong>{{artifact.dn}}</strong>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover" style="table-layout: fixed;">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr ng-repeat="(k,v) in content.attributes">
+                <td><strong>{{k}}</strong></td>
+                <td style="word-wrap: break-word;">{{v}}</td>
+            </tr>
+        </dl>
+    </div>
+</div>
+<div class="panel panel-danger" ng-if="!success">
+    <div class="panel-heading">
+        <strong>{{(artifact.data || artifact.attachment.name) | fang}}</strong>
+    </div>
+    <div class="panel-body">
+        {{content.errorMessage}}
+    </div>
+</div>
