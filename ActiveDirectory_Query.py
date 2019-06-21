@@ -3,6 +3,7 @@
 
 from cortexutils.analyzer import Analyzer
 from ldap3 import Server, Connection, ALL, ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRIBUTES
+import json
 
 class ActiveDirectoryAnalyzer(Analyzer):
 
@@ -56,7 +57,7 @@ class ActiveDirectoryAnalyzer(Analyzer):
 			if self.service == 'ad-user':
 				self.ad_connect()
 				self.ad_search()
-				self.report(self.connection.entries)
+				self.report(json.loads(self.connection.entries[0].entry_to_json()))
 			else:
 				self.error('Invalid service')
 
