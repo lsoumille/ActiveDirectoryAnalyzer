@@ -50,7 +50,7 @@ class ActiveDirectoryAnalyzer(Analyzer):
 
 	#Analyzer main function
 	def run(self):
-		if (self.username is None) or (self.password is None) or (self.server is None) or (self.base is None):
+		if (self.bind_username is None) or (self.bind_password is None) or (self.ad_server is None) or (self.base is None):
 			self.error('Invalid configuration')
 		else:
 			if self.service == 'ad-user':
